@@ -47,7 +47,7 @@ public class FormController
 		 */
 		return "01Form/servletRequest";
 	}
-	
+
 	/*
 	 * 폼값 받기 2] @RequestMapping 어노테이션으로 폼값 받기
 	 * 		파라미터 형식으로 아래와 같이 사용한다. 이와같이 하면 해당 메소드내에서 변수명을 그대로 사용할 수 있다.
@@ -64,6 +64,7 @@ public class FormController
 		model.addAttribute("member", memberDTO);
 		return "01Form/requestParam";
 	}
+
 	/*
 	 * 폼값 받기 3] 커멘드객체를 이용해서 폼값 한번에 받기
 	 * 		조건1 : 쿼리스트링으로 전달되는 파라미터의 갯수와 폼값을 저장할 객체(DTO 혹은 VO)의 멤버변수의 갯수가 동일할 때 사용 가능함
@@ -73,10 +74,12 @@ public class FormController
 	 * 			      이에 해당하는 getter / setter가 생성되어야 한다.
 	 * 		※ 커맨드객체의 이름을 변경해서 View로 전달하고 싶다면 @ModelAttribute 어노테이션을 사용하면 된다. (뒤에서 학습)
 	 */
-	@RequestMapping("/form/commandObjGet.do")
-	public String commandObjGet(MemberDTO memberDTO) {
+	@RequestMapping("/form/commandObj.Get.do")
+	public String commandObjGet(MemberDTO memberDTO)
+	{
 		return "01Form/commandObjGet";
 	}
+
 	/*
 	 * 폼값 받기 4] @PathVariable어노테이션으로 폼값받기
 	 * 		요청명 ./form 뒤에 붙은 값이 메소드에서 사용가능한 파라미터가 된다. 아래의 경우 2개의 파라미터를 받아서 사용하게 된다.
@@ -84,7 +87,8 @@ public class FormController
 	 * 		파라미터 갯수가 틀릴경우 404에러가 발생한다.
 	 */
 	@RequestMapping("/form/{memberId}/{memberName}")
-	public String pathVariable(Model model, @PathVariable String memberId, @PathVariable String memberName) {
+	public String pathVariable(Model model, @PathVariable String memberId, @PathVariable String memberName)
+	{
 		model.addAttribute("memberId", memberId);
 		model.addAttribute("memberName", memberName);
 		return "01Form/pathVariable";

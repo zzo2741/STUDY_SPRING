@@ -23,41 +23,48 @@
 	<!-- 1. 요청명을 결정한다. -->
 	<ul>
 		<li>
-			<a href="./home/helloSpring" target="_blank">
-				첫 번째 컨트롤러 바로가기
-			</a>
+			<a href="./home/helloSpring" target="_blank"> 첫 번째 컨트롤러 바로가기 </a>
 		</li>
 	</ul>
-	
-	<!--  -->
+
+	<!-- 컨트롤러 : FormController.java -->
 	<h3>form값 처리하기</h3>
-	<li>
-		<a href="./form/servletRequest?id=kosmo&pw=1234" target="_blank">
-			HttpServletRequest로 폼값받기
-		</a>
-	</li>
-	<li>
-		<a href="./form/requestParam.do?id=kosmo&pw=1234&name=이준승&email=dlwnstmd@gmail.com" target="_blank">
-			@requestParam 어노테이션으로 폼값받기
-		</a>
-	</li>
-	<li>
-		<a href="./form/commandObjGet.do?id=kosmo&pw=1234&name=이준승&email=dlwnstmd@gmail.com" target="_blank">
-			커맨드(Command)객체로 한번에 폼값받기
-		</a>
-	</li>
-	<li>
-		<a href="./form/junseunglee/코스모" target="_blank">
-			pathVariable 어노테이션으로 폼값받기
-		</a>
-	</li>
-	
+	<ul>
+		<li>
+			<a href="./form/servletRequest?id=kosmo&pw=1234" target="_blank"> HttpServletRequest로 폼값받기 </a>
+		</li>
+		<li>
+			<a href="./form/requestParam.do?id=kosmo&pw=1234&name=이준승&email=dlwnstmd@gmail.com" target="_blank"> @requestParam 어노테이션으로 폼값받기 </a>
+		</li>
+		<li>
+			<a href="./form/commandObjGet.do?id=kosmo&pw=1234&name=이준승&email=dlwnstmd@gmail.com" target="_blank"> 커맨드(Command)객체로 한번에 폼값받기 </a>
+		</li>
+		<li>
+			<a href="./form/junseunglee/코스모" target="_blank"> pathVariable 어노테이션으로 폼값받기 </a>
+		</li>
+	</ul>
 	<!-- 컨트롤러 : RequestMappingController.java -->
 	<h3>@RequestMapping 어노테이션 활용</h3>
-	<li>
-		<a href="./requestMapping/index.do" target="_blank">
-			requestMapping시작페이지 바로가기
-		</a>
-	</li>
+	<ul>
+		<li>
+			<a href="./requestMapping/index.do" target="_blank"> requestMapping시작페이지 바로가기 </a>
+		</li>
+	</ul>
+
+	<!-- 컨트롤러 : ValidateController.java -->
+	<h2>폼 데이터 검증하기 - Validator</h2>
+	<ul>
+		<li>
+			<a href="validate/memberRegist.do" target="_blank"> 회원가입 바로가기 </a>
+		</li>
+	</ul>
+
+	<!-- 컨트롤러 : DIController.java -->
+	<h3>DI(Dependency Injection) : 의존성 주입</h3>
+	<ul>
+		<li>
+			<a href="di/myCalculator" target="_blank">간단한 사칙연산 계산기</a>
+		</li>
+	</ul>
 </body>
 </html>
