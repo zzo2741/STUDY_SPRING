@@ -1,11 +1,17 @@
 package com.kosmo.k11spring;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
+import di.AppConfiguration;
+import di.AvengersInfo;
+import di.AvengersVO;
+import di.BMIInfoView;
 import di.CalculatorDTO;
 
 @Controller
@@ -36,5 +42,79 @@ public class DIController
 		model.addAttribute("mulResult", myCal.mul());
 		model.addAttribute("divResult", myCal.div());
 		return "04DI/myCalculator";
+	}
+
+	@RequestMapping("/di/myBMICal")
+	public String bmiCal(Model model)
+	{
+		// applicationContext파일 생성 및 경로 설정
+		String configLoc = "classpath:DIAppCtxBMICal.xml";
+		AbstractApplicationContext ctx = new GenericXmlApplicationContext(configLoc);
+		// 위에서 생성된 객체를 통해 Bean을 주입받는다.
+		/*
+		 * 사용법 :
+		 * 		getBean("Bean의 참조변수명", Bean생성시 사용된 클래스명.class);
+		 */
+		BMIInfoView myInfo = ctx.getBean("myInfo", BMIInfoView.class);
+		ctx.close();
+		// 주입받은 빈을 통해 멤버메소드 호출 및 model객체에 정보 저장
+		String myBMIResult = myInfo.getInfo();
+		model.addAttribute("myBMIResult", myBMIResult);
+		return "04DI/myBMICal";
+	}
+
+	// 어벤져스 히어로 출력하기
+	@RequestMapping("/di/myAvengers")
+	public ModelAndView myAvengers()
+	{
+		/*
+		 * 오브젝트(객체 혹은 빈)의 생성을 책임지는 오브젝트 팩토리에 대응하는 것이 ApplicationContext이다.
+		 * 다른말로는 IoC(컨테이너, 스프링컨테이너 혹은 BeanFactory로 부르기도 한다.)
+		 * 즉, 빈에 대한 생성을 개발자가 하지 않고 Spring이 대신해준다는 뜻이다.
+		 *
+		 * 아래 classpath 키워드는 Build Path메뉴에서 확인 가능함.
+		 */
+		// 모델 객체에 정보저장과 뷰에 대한 설정을 동시에 진행
+		ModelAndView mv = new ModelAndView();
+		String cLocation = "classpath:DIAppCtxAvengers.xml";
+		AbstractApplicationContext ctx = new GenericXmlApplicationContext(cLocation);
+		// 캡틴 빈을 주입받은 후 정보출력을 위해 문자열을 저장함.
+		AvengersInfo avengersInfo = ctx.getBean("AvengersInfo1", AvengersInfo.class);
+		String captain = avengersInfo.AvengersView();
+		// 아이언맨 빈을 주입받은 후 정보출력을 위해 setter를 호출함
+		AvengersVO avengersVO = ctx.getBean("hero2", AvengersVO.class);
+		avengersInfo.setAvengers(avengersVO);
+		String ironMan = avengersInfo.AvengersView();
+
+		mv.setViewName("04DI/myAvengers");
+		mv.addObject("captain", captain);
+		mv.addObject("ironMan", ironMan);
+		return mv;
+	}
+
+	@RequestMapping("/di/myAnnotation")
+	public ModelAndView myAnnotation()
+	{
+		// 빈을 생성할 JAVA파일을 가져와서 스프링 컨테이너를 생성함.
+		AnnotationConfigApplicationContext aCtx = new AnnotationConfigApplicationContext(AppConfiguration.class);
+		// 빈을 주입받음.
+		BMIInfoView mem1 = aCtx.getBean("member1", BMIInfoView.class);
+		String str1 = "이름 : " + mem1.getName() + "<br>";
+		str1 += "취미 : " + mem1.getHobbys() + "<br>";
+		str1 += "신장 : " + mem1.getHeight() + "<br>";
+		str1 += "몸무게 : " + mem1.getWeight() + "<br>";
+		str1 += "BMI결과:" + mem1.bmiCalculation(); //그냥 실행하면 Nullpointer에러
+		
+		BMIInfoView mem2 = aCtx.getBean("member2", BMIInfoView.class);
+		String str2 = "이름 : " + mem2.getName() + "<br>";
+		str2 += "취미 : " + mem2.getHobbys() + "<br>";
+		str2 += "신장 : " + mem2.getHeight() + "<br>";
+		str2 += "몸무게 : " + mem2.getWeight() + "<br>";
+
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("04DI/myAnnotation");
+		mv.addObject("memberInfo1", str1);
+		mv.addObject("memberInfo2", str2);
+		return mv;
 	}
 }
