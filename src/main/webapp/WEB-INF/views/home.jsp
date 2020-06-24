@@ -59,6 +59,24 @@
 		</li>
 	</ul>
 
+	<!--
+		DI를 활용한 개발 순서
+		1. 요청명을 결정한다.
+			-> di/myClaculator
+		2. 컨트롤러를 생성한 후 해당 요청명을 매핑한 메소드 정의
+			->
+				@RequestMapping("/di/myCalculator")
+				public String 메소드명() {
+					수행할 내용
+				}
+		3. View에 해당하는 jsp파일을 생성한다.
+		4. 해당 프로그램에서 사용할 클래스 생성
+			-> src/main/java 아래 패키지 생성 후 클래스를 추가함
+		5. XML 설정파일을 생성한 후 <bean> 엘리먼트를 통해 빈 생성
+			-> src/main/resources 하위에 Spring Bean Configuration File을 생성함
+		6. View로 전달할 정보를 model객체에 저장한 후 호출
+			-> String 혹은 modelAndView 객체를 사용함.
+	-->
 	<!-- 컨트롤러 : DIController.java -->
 	<h3>DI(Dependency Injection) : 의존성 주입</h3>
 	<ul>
@@ -86,6 +104,19 @@
 		</li>
 		<li>
 			<a href="environment/main3" target="_blank">외부파일 참조하기3(어노테이션 사용)</a>
+		</li>
+	</ul>
+
+	<h3>파일업로드</h3>
+	<ul>
+		<li>
+			<a href="./fileUpload/uploadPath.do" target="_blanck">upload폴더의 물리적 경로 확인하기 </a>
+		</li>
+		<li>
+			<a href="./fileUpload/uploadForm.do" target="_blank">파일업로드 폼 </a>
+		</li>
+		<li>
+			<a href="./fileUpload/uploadList.do" target="_blank"> 파일목록보기 </a>
 		</li>
 	</ul>
 </body>
