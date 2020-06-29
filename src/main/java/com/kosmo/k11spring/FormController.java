@@ -15,8 +15,7 @@ import common.MemberDTO;
  * 그리고 해당 요청명에 매핑되는 메소드를 찾아 요청을 전달하고 비즈니스 로직을 수행한다.
  *
  * @Controller
- * 		: 해당 클래스를 컨트롤러로 사용하고 싶을 때 클래스명앞에 선언한다.
- * 		패키지를 스캔할 때 해당 어노테이션이 있는 클래스를 찾아서 요청을 전달한다.
+ * 		: 해당 클래스를 컨트롤러로 사용하고 싶을 때 클래스명앞에 선언한다. 패키지를 스캔할 때 해당 어노테이션이 있는 클래스를 찾아서 요청을 전달한다.
  *
  * @RequestMapping
  * 		: 요청명을 매핑한다. 요청명은 서블릿과 마찬가지로 컨택스트루트를 제외한 나머지경로명으로 이루어진다.
@@ -74,7 +73,7 @@ public class FormController
 	 * 			      이에 해당하는 getter / setter가 생성되어야 한다.
 	 * 		※ 커맨드객체의 이름을 변경해서 View로 전달하고 싶다면 @ModelAttribute 어노테이션을 사용하면 된다. (뒤에서 학습)
 	 */
-	@RequestMapping("/form/commandObj.Get.do")
+	@RequestMapping("/form/commandObjGet.do")
 	public String commandObjGet(MemberDTO memberDTO)
 	{
 		return "01Form/commandObjGet";
