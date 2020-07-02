@@ -11,15 +11,22 @@
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 
-	<!-- SpringMVC로 요청이 들어오면 제일먼저 DispatcherServlet이 요청을 받는다. 그리고 아래 설정된 기본패키지를 검색(scan)한 후 @Controller 어노테이션이 설정된 클래스의 요청명이 매핑된 메소드를 찾아 실행된다. -->
+	<!-- SpringMVC로 요청이 들어오면 제일먼저 DispatcherServlet이 요청을 받는다. 
+	그리고 아래 설정된 기본패키지를 검색(scan)한 후 @Controller 어노테이션이 설정된 클래스의 요청명이 매핑된 메소드를 찾아 실행된다. -->
 	<context:component-scan base-package="com.kosmo.k11spring" />
 
 	<!-- Spring Framework에서 이미지나 js, css파일 등의 리소스를 사용하기 위해 생성된 폴더. -->
 	<resources mapping="/resources/**" location="/resources/" />
 	<resources mapping="/images/**" location="/resources/" />
 
-	<!-- 컨트롤러에서 비즈니스 로직을 수행한 후 view의 경로를 반환하면 ViewResolver가 해당 뷰의 경로를 아래와 같이 조립한다. [prefix] [suffix] /WEB-INF/views/ + 컨트롤러 반환값 + .jsp /WEB-INF/views/ + home + .jsp /WEB-INF/views/home.jsp /WEB-INF/views/helloSpring.jsp 
-		/WEB-INF/views/01Form/requestParam.jsp 이와 같이 조립한 후 웹브라우저에 해당 view를 로드한다. 컨트롤러는 view를 호출하기 전 출력할 내용을 model에 저장한다. -->
+	<!-- 컨트롤러에서 비즈니스 로직을 수행한 후 view의 경로를 반환하면 ViewResolver가 해당 뷰의 경로를 아래와 같이 조립한다. 
+	[prefix] [suffix] 
+	/WEB-INF/views/ + 컨트롤러 반환값 + .jsp 
+	/WEB-INF/views/ + home + .jsp 
+	/WEB-INF/views/home.jsp 
+	/WEB-INF/views/helloSpring.jsp 
+	/WEB-INF/views/01Form/requestParam.jsp 이와 같이 조립한 후 웹브라우저에 해당 view를 로드한다. 
+	컨트롤러는 view를 호출하기 전 출력할 내용을 model에 저장한다. -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
@@ -36,5 +43,54 @@
 		<beans:property name="order" value="0"></beans:property>
 	</beans:bean>
 
+	<!-- 트랜잭션 처리를 위한 빈생성 -->
+	<!-- 
+	1. 트랜잭션 매니저를 이용한 처리 
+	dataSource : DB연결에 대한 빈 생성
+	template : dataSource를 기반으로 jdbcTemplate타입의 빈
+	transactionManager : dataSource를 기반으로 생성한 DataSourceTransacionManager타입의 빈
+	transactionDAO : 위의 template, transactionManager 2개의 빈을 기반으로 생성된 DAO 빈.
+						(해당 DAO를 통해 트랜잭션을 처리한다.)
+	-->
+	<!-- <beans:bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<beans:property name="driverClassName" value="oracle.jdbc.OracleDriver"></beans:property>
+		<beans:property name="url" value="jdbc:oracle:thin://@localhost:1521:orcl"></beans:property>
+		<beans:property name="username" value="kosmo"></beans:property>
+		<beans:property name="password" value="1234"></beans:property>
+	</beans:bean>
+	dataSource를 기반으로 JDBCTemplate을 사용하기 위한 Bean
+	<beans:bean name="template" class="org.springframework.jdbc.core.JdbcTemplate">
+		<beans:property name="dataSource" ref="dataSource"></beans:property>
+	</beans:bean>
+	<beans:bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<beans:property name="dataSource" ref="dataSource"></beans:property>
+	</beans:bean>
+	<beans:bean name="transactionDAO" class="transaction.TicketDAO">
+		<beans:property name="template" ref="template"></beans:property>
+		<beans:property name="transactionManager" ref="transactionManager"></beans:property>
+	</beans:bean> -->
 
+	<!--  
+	2. 트랜잭션 템플릿 이용하기 위한 빈 생성
+		dataSource -> transactionManager -> transactionTemplate -> template -> TransactionDAO
+	-->
+	<beans:bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<beans:property name="driverClassName" value="oracle.jdbc.OracleDriver"></beans:property>
+		<beans:property name="url" value="jdbc:oracle:thin://@localhost:1521:orcl"></beans:property>
+		<beans:property name="username" value="kosmo"></beans:property>
+		<beans:property name="password" value="1234"></beans:property>
+	</beans:bean>
+	<beans:bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<beans:property name="dataSource" ref="dataSource"></beans:property>
+	</beans:bean>
+	<beans:bean name="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+		<beans:property name="transactionManager" ref="transactionManager"></beans:property>
+	</beans:bean>
+	<beans:bean name="template" class="org.springframework.jdbc.core.JdbcTemplate">
+		<beans:property name="dataSource" ref="dataSource"></beans:property>
+	</beans:bean>
+	<beans:bean name="TransactionDAO" class="transaction.TicketTplDAO">
+		<beans:property name="template" ref="template"></beans:property>
+		<beans:property name="transactionTemplate" ref="transactionTemplate"></beans:property>
+	</beans:bean>
 </beans:beans>

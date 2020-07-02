@@ -81,16 +81,16 @@
 	<h3>DI(Dependency Injection) : 의존성 주입</h3>
 	<ul>
 		<li>
-			<a href="di/myCalculator" target="_blank">간단한 사칙연산 계산기</a>
+			<a href="di/myCalculator" target="_blank"> 간단한 사칙연산 계산기 </a>
 		</li>
 		<li>
-			<a href="di/myBMICal" target="_blank">BMI(비만지수) 계산기</a>
+			<a href="di/myBMICal" target="_blank"> BMI(비만지수) 계산기 </a>
 		</li>
 		<li>
-			<a href="di/myAvengers" target="_blank">어벤져스 히어로</a>
+			<a href="di/myAvengers" target="_blank"> 어벤져스 히어로 </a>
 		</li>
 		<li>
-			<a href="di/myAnnotation" target="_blank">어노테이션을 이용한 DI활용 </a>
+			<a href="di/myAnnotation" target="_blank"> 어노테이션을 이용한 DI활용 </a>
 		</li>
 	</ul>
 	<!--
@@ -109,13 +109,13 @@
 	<h3>Environment 객체를 이용한 외부파일 참조하기</h3>
 	<ul>
 		<li>
-			<a href="environment/main1" target="_blank">외부파일 참조하기1(Environment객체 사용)</a>
+			<a href="environment/main1" target="_blank"> 외부파일 참조하기1(Environment객체 사용) </a>
 		</li>
 		<li>
-			<a href="environment/main2" target="_blank">외부파일 참조하기2(XML설정파일 사용)</a>
+			<a href="environment/main2" target="_blank"> 외부파일 참조하기2(XML설정파일 사용) </a>
 		</li>
 		<li>
-			<a href="environment/main3" target="_blank">외부파일 참조하기3(어노테이션 사용)</a>
+			<a href="environment/main3" target="_blank"> 외부파일 참조하기3(어노테이션 사용) </a>
 		</li>
 	</ul>
 
@@ -150,13 +150,42 @@
 	<h3>파일업로드</h3>
 	<ul>
 		<li>
-			<a href="./fileUpload/uploadPath.do" target="_blanck">upload폴더의 물리적 경로 확인하기 </a>
+			<a href="./fileUpload/uploadPath.do" target="_blanck"> upload폴더의 물리적 경로 확인하기 </a>
 		</li>
 		<li>
-			<a href="./fileUpload/uploadForm.do" target="_blank">파일업로드 폼 </a>
+			<a href="./fileUpload/uploadForm.do" target="_blank"> 파일업로드 폼 </a>
 		</li>
 		<li>
 			<a href="./fileUpload/uploadList.do" target="_blank"> 파일목록보기 </a>
+		</li>
+	</ul>
+	<!--
+	트랜잭션의 개념
+		- 인터넷 뱅키으이 경우 A가 B에게 송금을 진행하는 경우 A에서는 출금되었으나 B에게는 입금이 되지 않는 상황이 발생된다면 해당 거래는 취소되어야 한다.
+		- 이와 같이 양쪽 모두 만족되어야 하나의 프로세스를 완료처리 할 수 있도록 해주는 기법을 트랜잭션이라고 한다.
+		- 즉 2개 이상의 쿼리를 하나의 커넥션으로 묶어 DB에 전송하고 이 과정에서 에러가 발생하는 경우 양쪽 모두를 원래의 상태로 되돌려 놓는다.
+		
+	절차
+	1. 트랜잭션 매니저를 사용하는 경우
+		1-1. 오라클 드라이버, SPRING-JDBC에 대한 의존설정을 한다.
+		1-2. servlet-context.xml 에서 빈을 생성한다.
+		1-3. TicketDAO의 빈을 컨트롤러에서 자동주입 받아 사용한다.
+		1-4. 2개 이상의 작업을 try-catch로 묶어 하나라도 오류가 발생하는 경우 모든 작업을 rollback시킨다. 모든 작업이 정상처리 되었다면 commit 시킨다.
+	-->
+	<h3>트랜잭션(Transaction)</h3>
+	<ul>
+		<li>
+			<a href="transaction/buyTicketMain.do" target="_blank"> 티켓 구매하기1 </a>
+		</li>
+		<li>
+			<a href="transaction/buyTicketTpl.do" target="_blank"> 티켓 구매하기2 </a>
+		</li>
+	</ul>
+
+	<h3>JSON 사용하기(RestAPI)</h3>
+	<ul>
+		<li>
+			<a href="./jsonUse/jsonView.do" target="_blank"> @ResponseBody 어노테이션을 이용한 JSON데이터 보기 </a>
 		</li>
 	</ul>
 </body>
